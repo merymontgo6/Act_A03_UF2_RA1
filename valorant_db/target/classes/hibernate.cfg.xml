@@ -51,8 +51,8 @@
         <!-- Mapeo DENTRO DE LA CLASE -->
         <mapping class="com.iticbcn.karolaynmunoz.model.Rol"/>
         <mapping class="com.iticbcn.karolaynmunoz.model.Equip"/>
-        <mapping class="com.iticbcn.karolaynmunoz.model.Partida"/>
         <mapping class="com.iticbcn.karolaynmunoz.model.Personatge"/>
+        <mapping class="com.iticbcn.karolaynmunoz.model.Partida"/>
       
     </session-factory>
 </hibernate-configuration>
