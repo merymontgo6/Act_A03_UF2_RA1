@@ -19,8 +19,8 @@ public class Main {
             session.beginTransaction();
 
             
-            Rol r1 = new Rol(1, "Duelista");
-            Personatge p1 = new Personatge(1, "Reyna", r1);
+            Rol r1 = new Rol("Duelista");
+            Personatge p1 = new Personatge("Reyna", r1);
             Equip e1 = new Equip(1,  p1);
             Partida pa1 = new Partida();
 

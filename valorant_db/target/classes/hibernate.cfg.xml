@@ -35,7 +35,7 @@
         <!-- Només s'ha d'utilitzar la primera o dies vegades, s'ha de desactivar després-->
         <!-- Un cop estiguin creades les tables no es deixa amb el update, no canvia res de l'estructura-->
         <!-- SURT A L'EXAMEN!!!!!!-->
-        <property name="hbm2ddl.auto">update</property> 
+        <property name="hbm2ddl.auto">create</property> 
 
         <!-- IMPORTANT, SURT A L'EXAM-->
         <!-- opciones de hbm2dll:
@@ -49,7 +49,6 @@
         <mapping resource="rol.hbm.xml"/>
 
         <!-- Mapeo DENTRO DE LA CLASE -->
-        <mapping class="com.iticbcn.karolaynmunoz.model.Rol"/>
         <mapping class="com.iticbcn.karolaynmunoz.model.Equip"/>
         <mapping class="com.iticbcn.karolaynmunoz.model.Personatge"/>
         <mapping class="com.iticbcn.karolaynmunoz.model.Partida"/>

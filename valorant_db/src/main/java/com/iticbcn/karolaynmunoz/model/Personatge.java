@@ -7,6 +7,7 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -24,8 +25,8 @@ public class Personatge implements Serializable {
     @Column
     private String nom_personatges;
    
-    @ManyToOne
-    @JoinColumn(name = "id_rol")
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name = "id_rol",foreignKey=@ForeignKey(name="FK_PERSONATGE_ROL"),nullable=false)
     private Rol rol; 
 
     @OneToMany(mappedBy = "personatge", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -33,10 +34,9 @@ public class Personatge implements Serializable {
     
     public Personatge() {}
 
-    public Personatge(int id, String nom, Rol id_rol) {
-        this.id_personatge = id;
+    public Personatge(String nom, Rol rol) {
         this.nom_personatges = nom;
-        this.rol = id_rol;
+        this.rol = rol;
     }
 
     public int getId() {
@@ -55,13 +55,7 @@ public class Personatge implements Serializable {
         this.nom_personatges = nom;
     }
 
-    public Rol getId_rol() {
-        return rol;
-    }
 
-    public void setId_rol(Rol id_rol) {
-        this.rol = id_rol;
-    }
 
     public Set<Equip> getEquips() {
         return equips;
@@ -69,5 +63,13 @@ public class Personatge implements Serializable {
 
     public void setEquips(Set<Equip> equips) {
         this.equips = equips;
+    } 
+
+    public Rol getRol() {
+        return rol;
+    }
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
     }
 }
