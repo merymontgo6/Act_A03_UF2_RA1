@@ -49,7 +49,10 @@
         <mapping resource="rol.hbm.xml"/>
 
         <!-- Mapeo DENTRO DE LA CLASE -->
-        <mapping class="com.iticbcn.hibernate.model.Rol"/>
+        <mapping class="com.iticbcn.karolaynmunoz.model.Rol"/>
+        <mapping class="com.iticbcn.karolaynmunoz.model.Equip"/>
+        <mapping class="com.iticbcn.karolaynmunoz.model.Partida"/>
+        <mapping class="com.iticbcn.karolaynmunoz.model.Personatge"/>
       
     </session-factory>
 </hibernate-configuration>

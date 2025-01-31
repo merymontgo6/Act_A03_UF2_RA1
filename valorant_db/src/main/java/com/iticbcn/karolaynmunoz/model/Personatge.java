@@ -1,8 +1,7 @@
 package com.iticbcn.karolaynmunoz.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -27,17 +26,17 @@ public class Personatge implements Serializable {
    
     @ManyToOne
     @JoinColumn(name = "id_rol")
-    private Rol id_rol; 
+    private Rol rol; 
 
     @OneToMany(mappedBy = "personatge", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Equip> equips = new ArrayList<>();
+    private Set<Equip> equips;
     
     public Personatge() {}
 
     public Personatge(int id, String nom, Rol id_rol) {
         this.id_personatge = id;
         this.nom_personatges = nom;
-        this.id_rol = id_rol;
+        this.rol = id_rol;
     }
 
     public int getId() {
@@ -57,18 +56,18 @@ public class Personatge implements Serializable {
     }
 
     public Rol getId_rol() {
-        return id_rol;
+        return rol;
     }
 
     public void setId_rol(Rol id_rol) {
-        this.id_rol = id_rol;
+        this.rol = id_rol;
     }
 
-    public List<Equip> getEquips() {
+    public Set<Equip> getEquips() {
         return equips;
     }
 
-    public void setEquips(List<Equip> equips) {
+    public void setEquips(Set<Equip> equips) {
         this.equips = equips;
     }
 }

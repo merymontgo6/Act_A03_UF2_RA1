@@ -4,6 +4,11 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import com.iticbcn.karolaynmunoz.model.Equip;
+import com.iticbcn.karolaynmunoz.model.Partida;
+import com.iticbcn.karolaynmunoz.model.Personatge;
+import com.iticbcn.karolaynmunoz.model.Rol;
+
 public class Main {
     public static void main(String[] args) {
         Session session = null;
@@ -11,22 +16,23 @@ public class Main {
             SessionFactory sesion = HibernateUtil.getSessionFactory(); //crea instancia de la sessio
 
             session = sesion.openSession();
-
             session.beginTransaction();
 
-            //Professor p1 = new Professor("Antonio Talens"); 
-            //Professor p2 = new Professor("Roger Sobrino");
-        
-            //Moduls m1 = new Moduls("Acces a Dades"); 
-            //Moduls m2 = new Moduls("Programacio"); 
-            //Moduls m3 = new Moduls("Sistemes");
+            
+            Rol r1 = new Rol(1, "Duelista");
+            Personatge p1 = new Personatge(1, "Reyna", r1);
+            Equip e1 = new Equip(1,  p1);
+            Partida pa1 = new Partida();
 
+            session.persist(p1);
+            
+            
+            //Professor p1 = new Professor("Antonio Talens");
+            //Moduls m1 = new Moduls("Acces a Dades");
             //p1.addModul(m2); p1.addModul(m1); // afegim mòduls a p1
-            //p2.addModul(m3); p2.addModul(m1); // afegim mòduls a p2
 
             //desem (professors i mòduls en cascada)
             //session.persist(p1);
-            //session.persist(p2);
 
             //commit y cierre de sesion
             session.getTransaction().commit();

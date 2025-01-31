@@ -1,7 +1,6 @@
 package com.iticbcn.karolaynmunoz.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -12,16 +11,21 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "partida")
+@Table(name = "Partida")
 public class Partida implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_partida;
 
-    @ManyToMany(mappedBy = "partidas")
-    private List<Equip> equips = new ArrayList<>();
+    @ManyToMany(mappedBy = "partides")
+    private List<Equip> equips;
 
     public Partida() {}
+
+    public Partida(int id_partida, List<Equip> equips) {
+        this.id_partida = id_partida;
+        this.equips = equips;
+    }
 
     public int getId_partida() {
         return id_partida;

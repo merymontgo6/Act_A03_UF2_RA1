@@ -19,24 +19,24 @@ public class Rol implements Serializable {
         this.nom_rol = nom;
     }
 
-    public int getId() {
+    public int getId_rol() {
         return id_rol;
     }
 
-    public void setId(int id) {
+    public void setId_rol(int id) {
         this.id_rol = id;
     }
 
-    public String getNom() {
+    public String getNom_rol() {
         return nom_rol;
     }
 
-    public void setNom(String nom) {
+    public void setNom_rol(String nom) {
         this.nom_rol = nom;
     }
 
     @Override
     public String toString() {
-        return "Rol [id=" + id_rol + ", nom=" + nom_rol + "]";
+        return "Rol [id=" + id_rol + ", nom=" + nom_rol +"]";
     }
 }

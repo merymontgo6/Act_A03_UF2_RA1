@@ -1,7 +1,7 @@
 package com.iticbcn.karolaynmunoz.model;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.ForeignKey;
@@ -29,9 +29,14 @@ public class Equip implements Serializable {
     @JoinTable( name = "equip_partida",
         joinColumns = @JoinColumn(name = "id_equip", foreignKey = @ForeignKey(name = "FK_EQUIP_PARTIDA_EQUIP"),nullable = false),
         inverseJoinColumns = @JoinColumn(name = "id_partida", foreignKey = @ForeignKey(name = "FK_EQUIP_PARTIDA_PARTIDA"), nullable = false))
-    private List<Partida> partides;
+    private Set<Partida> partides;
 
     public Equip() {}
+
+    public Equip(int id_equip, Personatge id_personatge) {
+        this.id_equip = id_equip;
+        this.personatge = id_personatge;
+    }
 
     public int getId_equip() {
         return id_equip;
@@ -41,19 +46,19 @@ public class Equip implements Serializable {
         this.id_equip = id_equip;
     }
 
-    public Personatge getPersonatge() {
+    public Personatge getId_Personatge() {
         return personatge;
     }
 
-    public void setPersonatge(Personatge personatge) {
-        this.personatge = personatge;
+    public void setIdPersonatge(Personatge id_personatge) {
+        this.personatge = id_personatge;
     }
 
-    public List<Partida> getPartides() {
+    public Set<Partida> getPartides() {
         return partides;
     }
 
-    public void setPartidas(List<Partida> partides) {
+    public void setPartidas(Set<Partida> partides) {
         this.partides = partides;
     }
 }
