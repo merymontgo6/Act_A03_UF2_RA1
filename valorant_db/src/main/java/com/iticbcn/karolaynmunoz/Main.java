@@ -22,7 +22,37 @@ public class Main {
         try {
             SessionFactory sesion = HibernateUtil.getSessionFactory(); //crea instancia de la sessio
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            MenuOptions(br, sesion);
+            int opcio = MenuOptions(br);
+
+            switch(opcio) {
+                case 1 -> { //Demana la taula amb la que es vol treballar
+                    int taula = demanarTaula(br);
+                    switch (taula) {
+                        case 1 -> crearRol(taula, session, rol);
+                        case 2 -> crearPersonatge(taula, session, personatge);
+                        case 3 -> crearEquip(taula, session, equip);
+                        case 4 -> crearPartida(taula, session, partida);
+                    }
+                }
+                case 2 -> {
+                    int taula = demanarTaula(br);
+                    switch (taula) {
+                        case 1 -> readRol(session);
+                        case 2 -> readPersonatge(session);
+                        case 3 -> readEquip(session);
+                        case 4 -> readPartida(session);
+                    }
+
+                }
+                case 0 -> {
+                    sortirapp = true;
+                    break;
+                }
+                default -> {
+                    System.out.println("Opcio no vàlida");
+                    opcio = MenuOptions(br);
+                }
+            }
 
         } catch (HibernateException e) {
             if (session.getTransaction() != null) session.getTransaction().rollback();
@@ -35,7 +65,7 @@ public class Main {
         }
     }
 
-    public static void MenuOptions(BufferedReader br, SessionFactory session) throws NumberFormatException, IOException, SQLException, InterruptedException {
+    public static int MenuOptions(BufferedReader br) throws NumberFormatException, IOException, SQLException, InterruptedException {
         String message = "";
 
         message = "==================";
@@ -47,7 +77,7 @@ public class Main {
         message = "1. CREAR TAULA";
         System.out.println(message);
 
-        message = "2. CONSULTAR TOTES LES DADES";
+        message = "2. READ LES DADES";
         System.out.println(message);
 
         message = "3. CONSULTAR PER ID";
@@ -73,21 +103,8 @@ public class Main {
         }
 
         int opcio = Integer.parseInt(br.readLine());
-
-        switch(opcio) {
-            case 1 -> { //Demana la taula amb la que es vol treballar
-                int taula = demanarTaula(br);
-                crearDades(taula, br, session);
-            }
-            case 0 -> {
-                sortirapp = true;
-                break;
-            }
-            default -> {
-                System.out.println("Opcio no vàlida");
-                MenuOptions(br, session);
-            }
-        }
+        return opcio;
+        
     }
 
     public static int demanarTaula (BufferedReader br) throws IOException {
@@ -102,77 +119,105 @@ public class Main {
         int accio = Integer.parseInt(br.readLine());
         return accio;
     }
-    public void crearDades(int taula, SessionFactory sesion, Rol rol, Personatge personatge, Equip equip, Partida partida) throws IOException {
 
+    public void crearRol(int taula, SessionFactory sesion, Rol rol) throws IOException {
         try (Session session = sesion.openSession()) {
-           session.beginTransaction();
-            switch (taula) {
-                case 1 -> {
-                    try {
-                        session.persist(rol);
-                        session.getTransaction().commit();
+            session.beginTransaction();
+            try {
+                session.persist(rol);
+                session.getTransaction().commit();
 
-                    } catch (HibernateException e) {
-                        if (session.getTransaction() != null) {
-                            session.getTransaction().rollback();
-                            System.err.println("Error en Hibernate: " + e.getMessage()); 
-                        }
-                    } catch (Exception e) {
-                        if (session.getTransaction()  != null) {
-                            session.getTransaction().rollback();
-                            System.err.println("Error inesperado: " + e.getMessage());
-                        }
-                    }
+            } catch (HibernateException e) {
+                if (session.getTransaction() != null) {
+                    session.getTransaction().rollback();
+                    System.err.println("Error en Hibernate: " + e.getMessage()); 
                 }
-                case 2 -> {
-                    try {
-                        session.persist(personatge);
-                        session.getTransaction().commit();
-
-                    } catch (HibernateException e) {
-                        if (session.getTransaction() != null) {
-                            session.getTransaction().rollback();
-                            System.err.println("Error en Hibernate: " + e.getMessage()); 
-                        }
-                    } catch (Exception e) {
-                        if (session.getTransaction()  != null) {
-                            session.getTransaction().rollback();
-                            System.err.println("Error inesperado: " + e.getMessage());
-                        }
-                    }
+            } catch (Exception e) {
+                if (session.getTransaction()  != null) {
+                    session.getTransaction().rollback();
+                    System.err.println("Error inesperado: " + e.getMessage());
                 }
-                case 3 -> {
-                    try {
-                        session.persist(equip);
-                        session.getTransaction().commit();
+            }
+        }
+    }
 
-                    } catch (HibernateException e) {
-                        if (session.getTransaction() != null) {
-                            session.getTransaction().rollback();
-                            System.err.println("Error en Hibernate: " + e.getMessage()); 
-                        }
-                    } catch (Exception e) {
-                        if (session.getTransaction()  != null) {
-                            session.getTransaction().rollback();
-                            System.err.println("Error inesperado: " + e.getMessage());
-                        }
+    public void crearPersonatge (int taula, SessionFactory sesion, Personatge personatge) throws IOException {
+        try (Session session = sesion.openSession()) {
+            session.beginTransaction();
+            try {
+                session.persist(personatge);
+                session.getTransaction().commit();
+
+            } catch (HibernateException e) {
+                if (session.getTransaction() != null) {
+                    session.getTransaction().rollback();
+                    System.err.println("Error en Hibernate: " + e.getMessage()); 
+                }
+            } catch (Exception e) {
+                if (session.getTransaction()  != null) {
+                    session.getTransaction().rollback();
+                    System.err.println("Error inesperado: " + e.getMessage());
+                }
+            }
+        }
+    }
+
+    public void crearEquip (int taula, SessionFactory sesion, Equip equip) throws IOException {
+        try (Session session = sesion.openSession()) {
+            session.beginTransaction();
+            try {
+                session.persist(equip);
+                session.getTransaction().commit();
+
+            } catch (HibernateException e) {
+                if (session.getTransaction() != null) {
+                    session.getTransaction().rollback();
+                    System.err.println("Error en Hibernate: " + e.getMessage()); 
+                }
+            } catch (Exception e) {
+                if (session.getTransaction()  != null) {
+                    session.getTransaction().rollback();
+                    System.err.println("Error inesperado: " + e.getMessage());
+                }
+            }
+        }
+    }
+
+    public void crearPartida (int taula, SessionFactory sesion, Partida partida) throws IOException {
+        try (Session session = sesion.openSession()) {
+            session.beginTransaction();
+            try {
+                session.persist(partida);
+                session.getTransaction().commit();
+            } catch (HibernateException e) {
+                if (session.getTransaction() != null) {
+                        session.getTransaction().rollback();
+                        System.err.println("Error en Hibernate: " + e.getMessage()); 
                     }
-                } 
+            } catch (Exception e) {
+                if (session.getTransaction()  != null) {
+                        session.getTransaction().rollback();
+                        System.err.println("Error inesperado: " + e.getMessage());
+                }
+            }
+        }
+    }
+
+    public void readRol (int taula, SessionFactory sesion, Rol rol) {
+        try (Session session = sesion.openSession()) {
+            session.beginTransaction();
+            try {
                 
-                case 4 -> {
-                    try {
-                        session.persist(partida);
-                    } catch (HibernateException e) {
-                        if (session.getTransaction() != null) {
-                             session.getTransaction().rollback();
-                             System.err.println("Error en Hibernate: " + e.getMessage()); 
-                         }
-                   } catch (Exception e) {
-                        if (session.getTransaction()  != null) {
-                             session.getTransaction().rollback();
-                             System.err.println("Error inesperado: " + e.getMessage());
-       
-                   }
+
+            } catch (HibernateException e) {
+                if (session.getTransaction() != null) {
+                    session.getTransaction().rollback();
+                    System.err.println("Error en Hibernate: " + e.getMessage()); 
+                }
+            } catch (Exception e) {
+                if (session.getTransaction()  != null) {
+                    session.getTransaction().rollback();
+                    System.err.println("Error inesperado: " + e.getMessage());
                 }
             }
         }
