@@ -1,23 +1,23 @@
 package com.iticbcn.karolaynmunoz.model;
+
 import java.io.IOException;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-
-public class RolDAO {
+public class EquipDAO {
     private SessionFactory sessionFactory;
-
-    public RolDAO(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;    
-    }
     
-    public void crearRol(SessionFactory sesion, Rol rol) throws IOException {
+    public EquipDAO (SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
+    public void crearEquip (int taula, SessionFactory sesion, Equip equip) throws IOException {
         try (Session session = sesion.openSession()) {
             session.beginTransaction();
             try {
-                session.persist(rol);
+                session.persist(equip);
                 session.getTransaction().commit();
 
             } catch (HibernateException e) {

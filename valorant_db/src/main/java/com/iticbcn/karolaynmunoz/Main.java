@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.SQLException;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -12,7 +14,9 @@ import org.hibernate.SessionFactory;
 import com.iticbcn.karolaynmunoz.model.Equip;
 import com.iticbcn.karolaynmunoz.model.Partida;
 import com.iticbcn.karolaynmunoz.model.Personatge;
+import com.iticbcn.karolaynmunoz.model.PersonatgeDAO;
 import com.iticbcn.karolaynmunoz.model.Rol;
+import com.iticbcn.karolaynmunoz.model.RolDAO;
 
 public class Main {
     static boolean sortirapp = false;
@@ -25,13 +29,13 @@ public class Main {
             int opcio = MenuOptions(br);
 
             switch(opcio) {
-                case 1 -> { //Demana la taula amb la que es vol treballar
+                case 1 -> {
                     int taula = demanarTaula(br);
                     switch (taula) {
-                        case 1 -> crearRol(taula, session, rol);
-                        case 2 -> crearPersonatge(taula, session, personatge);
-                        case 3 -> crearEquip(taula, session, equip);
-                        case 4 -> crearPartida(taula, session, partida);
+                        case 1 -> dadesRol(br, sesion);
+                        case 2 -> dadesPersonatge(br, sesion);
+                        case 3 -> dadesEquip(br, sesion);
+                        case 4 -> dadesPartida(br, sesion);
                     }
                 }
                 case 2 -> {
@@ -120,106 +124,35 @@ public class Main {
         return accio;
     }
 
-    public void crearRol(int taula, SessionFactory sesion, Rol rol) throws IOException {
-        try (Session session = sesion.openSession()) {
-            session.beginTransaction();
-            try {
-                session.persist(rol);
-                session.getTransaction().commit();
+    public static void dadesRol(BufferedReader br, SessionFactory sesion) throws IOException {
+        RolDAO rDAO = new RolDAO(sesion);
+        System.out.println("Introdueix el nom del rol: ");
+        String nomRol = br.readLine();
 
-            } catch (HibernateException e) {
-                if (session.getTransaction() != null) {
-                    session.getTransaction().rollback();
-                    System.err.println("Error en Hibernate: " + e.getMessage()); 
-                }
-            } catch (Exception e) {
-                if (session.getTransaction()  != null) {
-                    session.getTransaction().rollback();
-                    System.err.println("Error inesperado: " + e.getMessage());
-                }
-            }
+        System.out.println("Introdueix el nom dels personatges: ");
+        String[] nomsPersonatges = br.readLine().split(",");
+        Set<Personatge> nomPersonatge = new HashSet<>();
+        for (String nom : nomsPersonatges) {
+            nomPersonatge.add(new Personatge(nom.trim()));
         }
+
+        Rol rol1 = new Rol(nomRol, nomPersonatge);
+        rDAO.crearRol(sesion, rol1);
     }
 
-    public void crearPersonatge (int taula, SessionFactory sesion, Personatge personatge) throws IOException {
-        try (Session session = sesion.openSession()) {
-            session.beginTransaction();
-            try {
-                session.persist(personatge);
-                session.getTransaction().commit();
+    public static void dadesPersonatge(BufferedReader br, SessionFactory sesion) throws  IOException {
+        PersonatgeDAO pDAO= new PersonatgeDAO(sesion);
+        System.out.println("Introdueix el nom del personatge: ");
+        String nomPersonatge = br.readLine();
 
-            } catch (HibernateException e) {
-                if (session.getTransaction() != null) {
-                    session.getTransaction().rollback();
-                    System.err.println("Error en Hibernate: " + e.getMessage()); 
-                }
-            } catch (Exception e) {
-                if (session.getTransaction()  != null) {
-                    session.getTransaction().rollback();
-                    System.err.println("Error inesperado: " + e.getMessage());
-                }
-            }
-        }
-    }
+        System.out.println("Introdueix el id de rol: ");
+        int idRol = Integer.parseInt(br.readLine());
 
-    public void crearEquip (int taula, SessionFactory sesion, Equip equip) throws IOException {
-        try (Session session = sesion.openSession()) {
-            session.beginTransaction();
-            try {
-                session.persist(equip);
-                session.getTransaction().commit();
+        System.out.println("Introdueix l'equip");
 
-            } catch (HibernateException e) {
-                if (session.getTransaction() != null) {
-                    session.getTransaction().rollback();
-                    System.err.println("Error en Hibernate: " + e.getMessage()); 
-                }
-            } catch (Exception e) {
-                if (session.getTransaction()  != null) {
-                    session.getTransaction().rollback();
-                    System.err.println("Error inesperado: " + e.getMessage());
-                }
-            }
-        }
-    }
 
-    public void crearPartida (int taula, SessionFactory sesion, Partida partida) throws IOException {
-        try (Session session = sesion.openSession()) {
-            session.beginTransaction();
-            try {
-                session.persist(partida);
-                session.getTransaction().commit();
-            } catch (HibernateException e) {
-                if (session.getTransaction() != null) {
-                        session.getTransaction().rollback();
-                        System.err.println("Error en Hibernate: " + e.getMessage()); 
-                    }
-            } catch (Exception e) {
-                if (session.getTransaction()  != null) {
-                        session.getTransaction().rollback();
-                        System.err.println("Error inesperado: " + e.getMessage());
-                }
-            }
-        }
-    }
+        Personatge p1 = new Personatge(nomPersonatge, idRol, equip);
+        pDAO.crearPersonatge(sesion, p1);
 
-    public void readRol (int taula, SessionFactory sesion, Rol rol) {
-        try (Session session = sesion.openSession()) {
-            session.beginTransaction();
-            try {
-                
-
-            } catch (HibernateException e) {
-                if (session.getTransaction() != null) {
-                    session.getTransaction().rollback();
-                    System.err.println("Error en Hibernate: " + e.getMessage()); 
-                }
-            } catch (Exception e) {
-                if (session.getTransaction()  != null) {
-                    session.getTransaction().rollback();
-                    System.err.println("Error inesperado: " + e.getMessage());
-                }
-            }
-        }
     }
 }

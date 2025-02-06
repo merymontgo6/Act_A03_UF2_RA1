@@ -39,6 +39,10 @@ public class Personatge implements Serializable {
         this.rol = rol;
     }
 
+    public Personatge(String nom) {
+        this.nom_personatges = nom;
+    }
+
     public int getId() {
         return id_personatge;
     }
