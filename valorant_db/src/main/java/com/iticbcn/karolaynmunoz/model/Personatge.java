@@ -76,4 +76,13 @@ public class Personatge implements Serializable {
     public void setRol(Rol rol) {
         this.rol = rol;
     }
+
+    @Override
+    public String toString() {
+        return "id_personatge=" + id_personatge +
+                ", nom_personatges='" + nom_personatges + '\'' +
+                ", rol=" + rol +
+                ", equips=" + equips +
+                '}';
+    }
 }

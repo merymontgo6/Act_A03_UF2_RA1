@@ -3,6 +3,7 @@ package com.iticbcn.karolaynmunoz.model;
 import java.io.Serializable;
 import java.util.Set;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
@@ -21,6 +22,9 @@ public class Equip implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_equip;
 
+    @Column
+    private String nom_equip;
+
     @ManyToOne
     @JoinColumn(name = "id_personatge")
     private Personatge personatge;
@@ -33,9 +37,13 @@ public class Equip implements Serializable {
 
     public Equip() {}
 
-    public Equip(int id_equip, Personatge id_personatge) {
-        this.id_equip = id_equip;
+    public Equip(String nom_equip, Personatge id_personatge) {
+        this.nom_equip = nom_equip;
         this.personatge = id_personatge;
+    }
+
+    public Equip(String nom_equip) {
+        this.nom_equip = nom_equip;
     }
 
     public int getId_equip() {
@@ -44,6 +52,14 @@ public class Equip implements Serializable {
 
     public void setId_equip(int id_equip) {
         this.id_equip = id_equip;
+    }
+
+    public void setNom_equip(String nom_equip) {
+        this.nom_equip = nom_equip;
+    }
+
+    public String getNom_equip() {
+        return nom_equip;
     }
 
     public Personatge getId_Personatge() {
@@ -60,5 +76,24 @@ public class Equip implements Serializable {
 
     public void setPartidas(Set<Partida> partides) {
         this.partides = partides;
+    }
+
+    @Override // Override toString method fet per chat, partides dava errors
+    public String toString() {
+        StringBuilder partidesStr = new StringBuilder();
+        if (partides != null) {
+            for (Partida partida : partides) {
+                if (partidesStr.length() > 0) {
+                    partidesStr.append(", ");
+                }
+                partidesStr.append(partida.getId_partida());
+            }
+        }
+        return "Equip{" +
+                "id_equip=" + id_equip +
+                ", nom_equip='" + nom_equip + '\'' +
+                ", personatge=" + (personatge != null ? personatge.getNom() : "null") +
+                ", partides=" + partidesStr +
+                '}';
     }
 }
