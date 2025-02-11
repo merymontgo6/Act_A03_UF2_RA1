@@ -1,4 +1,4 @@
-package com.iticbcn.karolaynmunoz.model;
+package com.iticbcn.karolaynmunoz.DAO;
 
 import java.io.IOException;
 import java.util.List;
@@ -7,6 +7,10 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
+
+import com.iticbcn.karolaynmunoz.model.Equip;
+import com.iticbcn.karolaynmunoz.model.Personatge;
+import com.iticbcn.karolaynmunoz.model.Rol;
 
 public class PersonatgeDAO {
     private SessionFactory sessionFactory;

@@ -32,6 +32,9 @@ public class Personatge implements Serializable {
     @OneToMany(mappedBy = "personatge", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Equip> equips;
     
+
+    //addEquipos
+    
     public Personatge() {}
 
     public Personatge(String nom, Rol rol) {

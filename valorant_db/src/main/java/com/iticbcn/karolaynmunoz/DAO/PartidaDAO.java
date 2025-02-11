@@ -1,10 +1,13 @@
-package com.iticbcn.karolaynmunoz.model;
+package com.iticbcn.karolaynmunoz.DAO;
 
 import java.io.IOException;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+
+import com.iticbcn.karolaynmunoz.model.Equip;
+import com.iticbcn.karolaynmunoz.model.Partida;
 
 public class PartidaDAO {
     private SessionFactory sessionFactory;

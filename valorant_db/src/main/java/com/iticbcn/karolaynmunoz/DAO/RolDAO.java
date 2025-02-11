@@ -1,4 +1,4 @@
-package com.iticbcn.karolaynmunoz.model;
+package com.iticbcn.karolaynmunoz.DAO;
 import java.io.IOException;
 import java.util.List;
 
@@ -6,6 +6,9 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
+
+import com.iticbcn.karolaynmunoz.model.Personatge;
+import com.iticbcn.karolaynmunoz.model.Rol;
 
 
 public class RolDAO {
@@ -20,10 +23,23 @@ public class RolDAO {
         try (Session session = sesion.openSession()) {
             session.beginTransaction();
             try {
-                session.persist(rol); // Persistir el rol
-                for (Personatge personatge : rol.getPersonatges()) { // Recorrer els personatges amb el rol assignat
-                    session.persist(personatge); // Persistir els personatges amb el rol assignat
+                // Buscar si ja existeix un rol amb el mateix nom
+                Rol existentRol = (Rol) session.createQuery("FROM Rol r WHERE r.nom_rol = :nom", Rol.class)
+                    .setParameter("nom", rol.getNom_rol())
+                    .uniqueResult(); // Obtenir el rol amb el nom especificat, si existeix
+    
+                if (existentRol != null) { // Si el rol ja existeix, assignar-lo als personatges
+                    rol = existentRol;
+                } else { // Si no existeix, persistir el nou rol
+                    session.persist(rol);
                 }
+    
+                // Assignar el rol als personatges i persistir-los
+                for (Personatge personatge : rol.getPersonatges()) {
+                    personatge.setRol(rol); // Assegurar que el rol està assignat al personatge
+                    session.persist(personatge);
+                }
+    
                 session.getTransaction().commit();
             } catch (HibernateException e) {
                 if (session.getTransaction() != null) {
@@ -33,11 +49,11 @@ public class RolDAO {
             } catch (Exception e) {
                 if (session.getTransaction() != null) {
                     session.getTransaction().rollback();
-                    System.err.println("Error inesperado: " + e.getMessage());
+                    System.err.println("Error inesperat: " + e.getMessage());
                 }
             }
         }
-    }
+    }        
 
     public void readRol(SessionFactory sesion, int id) {
         try (Session session = sesion.openSession()) {

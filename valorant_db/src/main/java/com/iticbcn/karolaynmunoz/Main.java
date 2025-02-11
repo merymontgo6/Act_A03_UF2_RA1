@@ -13,14 +13,14 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import com.iticbcn.karolaynmunoz.DAO.EquipDAO;
+import com.iticbcn.karolaynmunoz.DAO.PartidaDAO;
+import com.iticbcn.karolaynmunoz.DAO.PersonatgeDAO;
+import com.iticbcn.karolaynmunoz.DAO.RolDAO;
 import com.iticbcn.karolaynmunoz.model.Equip;
-import com.iticbcn.karolaynmunoz.model.EquipDAO;
 import com.iticbcn.karolaynmunoz.model.Partida;
-import com.iticbcn.karolaynmunoz.model.PartidaDAO;
 import com.iticbcn.karolaynmunoz.model.Personatge;
-import com.iticbcn.karolaynmunoz.model.PersonatgeDAO;
 import com.iticbcn.karolaynmunoz.model.Rol;
-import com.iticbcn.karolaynmunoz.model.RolDAO;
 
 public class Main {
     public static boolean sortirapp = false;
@@ -66,8 +66,6 @@ public class Main {
                     switch (taula) {
                         case 1 -> updateRol(br, sesion);
                         case 2 -> updatePersonatge(br, sesion);
-                        //case 3 -> updateEquip(br, sesion);
-                        //case 4 -> updatePartida(br, sesion);
                     }
                 }
                 case 4 -> {
@@ -77,9 +75,6 @@ public class Main {
                     int taula = demanarTaula(br);
                     switch (taula) {
                         case 1 -> deleteRol(br, sesion);
-                        //case 2 -> deletePersonatge(br, sesion);
-                        //case 3 -> deleteEquip(br, sesion);
-                        //case 4 -> deletePartida(br, sesion);
                     }
                 }
                 case 5 -> {
@@ -89,9 +84,6 @@ public class Main {
                     int taula = demanarTaula(br);
                     switch (taula) {
                         case 1 -> findAllRol(br, sesion);
-                        //case 2 -> findAllPersonatge(br, sesion);
-                        //case 3 -> findAllEquip(br, sesion);
-                        //case 4 -> findAllPartida(br, sesion);
                     }
                 }
                 case 6 -> {
@@ -102,8 +94,6 @@ public class Main {
                     switch (taula) {
                         case 1 -> agregacionsRol(br, sesion);
                         case 2 -> agregacionsPersonatge(br, sesion);
-                        //case 3 -> agregacionsEquip(br, sesion);
-                        //case 4 -> agregacionsPartida(br, sesion);
                     }
                 }
                 case 0 -> {
@@ -136,7 +126,7 @@ public class Main {
         message = "OPCIONS";
         System.out.println(message);
 
-        message = "1. CREAR TAULA";
+        message = "1. CREAR (INSERIR) LES DADES";
         System.out.println(message);
 
         message = "2. READ LES DADES";
@@ -153,7 +143,6 @@ public class Main {
 
         message = "6. AGREGACIONS (GROUP BY)";
         System.out.println(message);
-
         message = "0. SORTIR";
         System.out.println(message);
 
@@ -176,12 +165,6 @@ public class Main {
         int taula = Integer.parseInt(br.readLine());
 
         return taula;
-    }
-
-    public static int demanarAccio (BufferedReader br) throws IOException {
-        System.out.println("Quina acció vols fer?:\n1. Inserir\n2. Esborrar\n3. Modificar");
-        int accio = Integer.parseInt(br.readLine());
-        return accio;
     }
 
     public static void dadesRol(BufferedReader br, SessionFactory sesion) throws IOException {
