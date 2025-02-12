@@ -128,11 +128,32 @@ Es demana l'Id del rol, es troba i s'elimina completament de la taula.
 #### findAllRol(BufferedReader br, SessionFactory sessio)
 
 Llista tots els rols emmagatzemats a la base de dades.
+Primerament al main es crea RolDAO i envia la sessió.
+
+![alt text](imatges/image18.png)
+
+Després, al mètode findAll de RolDAO.java es gestionen les excepcions i es fa la query per poder obtenir tots els valors de la base de dades. En aquesta part no es realitzen SELECTS ja que l'Hibernate ja directament ho fa.
+
+![alt text](imatges/image19.png)
+
+Comprovació a la Terminal:
+Es selecciona l'opció de findAll i la taula que es vol, en aquest cas Rol. A la terminal surten els prints per find de totd els rols que es troben dins de la base de dades.
+
+![alt text](imatges/image20.png)
 
 #### agregacionsRol(BufferedReader br, SessionFactory sessio)
 
 Permet fer operacions d'agregació (GROUP BY) a la taula de rols, agrupant per ID o nom.
+Al main es pregunta quin tipus d'agregació es vol fer, per tant pot ser una agrupació mitjançant l'Id del rol o amb el seu nom.
 
-#### agregacionsPersonatge(BufferedReader br, SessionFactory sessio)
+![alt text](imatges/image21.png)
 
-Realitza operacions d'agregació a la taula de personatges, agrupant per ID, ID de rol o nom del personatge.
+Una vegada que es te la resposta, s'envia cap a RolDAO.java on es troba el mètode agregacionsRol(), és aqui on es fa la consulta.
+
+Comprovació a la Terminal:
+Es selecciona la taula Rol per fer l'agrupació i després el tipus, en aquest cas vaig provar amb id_rol, llavors surt que hi ha 1 personatge amb el rol x.
+
+![alt text](imatges/image22.png)
+
+Aquest procediment es realitza a dues clases, Rol i personatge. Els mètodes són:
+- agregacionsPersonatge(): Realitza operacions d'agregació a la taula de personatges, agrupant per ID, ID de rol o nom del personatge.
