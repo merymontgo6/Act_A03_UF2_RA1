@@ -169,7 +169,6 @@ public class Main {
 
     public static void dadesRol(BufferedReader br, SessionFactory sesion) throws IOException {
         RolDAO rDAO = new RolDAO(sesion);
-        PersonatgeDAO pDAO = new PersonatgeDAO(sesion);
     
         System.out.println("Introdueix el nom del rol: ");
         String nomRol = br.readLine();

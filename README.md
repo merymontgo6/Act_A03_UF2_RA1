@@ -45,70 +45,94 @@ Aquesta opcio es fa en totes les opcions CRUD, findAll i GROUP BY.
 
 ![alt text](imatges/image5.png)
 
-##### dadesRol(BufferedReader br, SessionFactory sessio)
+#### dadesRol(BufferedReader br, SessionFactory sessio)
 
 Demana dades per crear un nou rol juntament amb els seus personatges associats.
+
+![alt text](imatges/image6.png)
+
 Crea una instància de "Rol" i "Personatge" i els emmagatzema a la base de dades.
+Primerament es comprova si existeix algun rol amb el mateix nombre, llavors si existeix els assigna als personatges. Però si no, es persisteixen els rols i els personatges.
 
+![alt text](imatges/image7.png)
 
-##### dadesPersonatge(BufferedReader br, SessionFactory sessio)
+Basicament es demanen les dades al main per el mètode dadesRol, s'afegeix la informació a un objecte i s'envia a la clase RolDAO on es troba el mètode per persistir rol i personatge, fent primerament una comprovació de la seva existència.
 
-Permet la creació d'un nou personatge i la seva associació amb un rol i un equip.
+Comprovació a la Terminal:
+Es va escollir la primera opció per crear un rol. Després s'escull la taula per poder crear el rol. El seguent és introduir el nom del rol i el nom del personatge, pas seguent és esperar a que s'afegeixen les dades a la base de dades.
 
-Persisteix les dades a la base de dades.
+![alt text](imatges/image9.png)
 
-##### dadesEquip(BufferedReader br, SessionFactory sessio)
+Aquest procediment es realitza a la resta de les clases, com son Personatge, Equip i Partida. Com es part del mètode Create de CRUD es fa a totes les entitats. Els mètodes són:
 
-Demana informació per crear un nou equip i assignar-li un personatge.
+- dadesPersonatge(): Permet la creació d'un nou personatge i la seva associació amb un rol i un equip. Persisteix les dades a la base de dades.
+- dadesEquip(): Demana informació per crear un nou equip i assignar-li un personatge. Desa l'equip a la base de dades.
+- dadesPartida(): Demana l'ID d'un equip i l'assigna a una nova partida. Registra la partida a la base de dades.
 
-Desa l'equip a la base de dades.
-
-##### dadesPartida(BufferedReader br, SessionFactory sessio)
-
-Demana l'ID d'un equip i l'assigna a una nova partida.
-
-Registra la partida a la base de dades.
-
-##### demanarId()
+#### demanarId()
 
 Demana a l'usuari un ID per fer operacions de consulta o modificació.
 
-##### readRol(BufferedReader br, SessionFactory sessio)
+![alt text](imatges/image8.png)
+
+#### readRol(BufferedReader br, SessionFactory sessio)
 
 Demana un ID i recupera les dades d'un rol des de la base de dades.
 
-##### readPersonatge(BufferedReader br, SessionFactory sessio)
+![alt text](imatges/image10.png)
 
-Demana un ID i recupera la informació d'un personatge de la base de dades.
+Una vegada que es va obtenir l'Id s'envia cap a la classe RolDAO on es troba el mètode per trobar un rol mitjançant find() i el mostra.
 
-##### readEquip(BufferedReader br, SessionFactory sessio)
+![alt text](imatges/image11.png)
 
-Recupera les dades d'un equip utilitzant un ID proporcionat per l'usuari.
+Comprovació a la Terminal:
+S'escull la primera opció per llegir el rol, després la taula Rol, i per últim, s'insereix el ID del rol que volem llegir. En aquest cas 1, llavors entre linies es mostra els resultats obtinguts d'aquest ID.
 
-##### readPartida(BufferedReader br, SessionFactory sessio)
+![alt text](imatges/image12.png)
 
-Recupera les dades d'una partida segons l'ID introduït.
+Aquest procediment es realitza a la resta de les clases, com son Personatge, Equip i Partida. Com es part del mètode Read de CRUD es fa a totes les entitats. Els mètodes són:
+- readPersonatge(): Demana un ID i recupera la informació d'un personatge de la base de dades.
+- readEquip(): Recupera les dades d'un equip utilitzant un ID proporcionat per l'usuari.
+- readPartida(): Recupera les dades d'una partida segons l'ID introduït.
 
-##### updateRol(BufferedReader br, SessionFactory sessio)
+#### updateRol(BufferedReader br, SessionFactory sessio)
 
-Permet actualitzar el nom d'un rol existent a la base de dades.
+Permet actualitzar el nom d'un rol existent a la base de dades. Es demana l'Id per saber si existeix l'id a la base de dades, si el troba pregunta quin valor vol modificar, llavors envia les dades a RolDAO. 
 
-##### updatePersonatge(BufferedReader br, SessionFactory sessio)
+![alt text](imatges/image13.png) 
 
-Permet modificar el nom o l'ID de rol d'un personatge.
+Dins de la classe RolDAO.java es troba el mètode updateRol: amb aquest rebre l'id i no es null modifica els valors asignats.
 
-##### deleteRol(BufferedReader br, SessionFactory sessio)
+![alt text](imatges/image14.png)
+
+Comprovació a la Terminal:
+S'escriu l'Id que es vol modificar, després demana quin valor de rol es vol modificar i demana el nou valor. Si el canvi s'ha completat correctament surt un missatge d'actualització correcta al final.
+
+![alt text](imatges/image15.png)
+
+Aquest procediment es realitza a dues clases, Rol i personatge. Com es part del mètode Update de CRUD es fa a Rol i personatge. Els mètodes són:
+- updatePersonatge(): Permet modificar el nom o l'ID de rol d'un personatge.
+
+#### deleteRol(BufferedReader br, SessionFactory sessio)
 
 Elimina un rol de la base de dades segons l'ID introduït.
+Demana l'Id de rol que es vol eliminar, llavor l'envia a RolDAO on es troba el mètode per poder fer aquesta eliminació mitjançant delete().
 
-##### findAllRol(BufferedReader br, SessionFactory sessio)
+![alt text](imatges/image17.png)
+
+Comprovació en la Terminal:
+Es demana l'Id del rol, es troba i s'elimina completament de la taula.
+
+![alt text](imatges/image16.png)
+
+#### findAllRol(BufferedReader br, SessionFactory sessio)
 
 Llista tots els rols emmagatzemats a la base de dades.
 
-##### agregacionsRol(BufferedReader br, SessionFactory sessio)
+#### agregacionsRol(BufferedReader br, SessionFactory sessio)
 
 Permet fer operacions d'agregació (GROUP BY) a la taula de rols, agrupant per ID o nom.
 
-##### agregacionsPersonatge(BufferedReader br, SessionFactory sessio)
+#### agregacionsPersonatge(BufferedReader br, SessionFactory sessio)
 
 Realitza operacions d'agregació a la taula de personatges, agrupant per ID, ID de rol o nom del personatge.

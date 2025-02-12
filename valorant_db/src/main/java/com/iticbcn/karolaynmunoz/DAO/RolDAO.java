@@ -39,8 +39,9 @@ public class RolDAO {
                     personatge.setRol(rol); // Assegurar que el rol està assignat al personatge
                     session.persist(personatge);
                 }
-    
-                session.getTransaction().commit();
+                    session.getTransaction().commit();
+                    
+            //Es gestionen les excepcions
             } catch (HibernateException e) {
                 if (session.getTransaction() != null) {
                     session.getTransaction().rollback();
